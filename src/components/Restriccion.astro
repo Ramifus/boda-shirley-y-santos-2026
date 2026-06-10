@@ -73,11 +73,11 @@
         start: "top 85%",
         onEnter: () => {
           const tl = gsap.timeline();
-          tl.to("#restriccion-separador", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
-            .to("#restriccion-titulo", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.4")
-            .to("#restriccion-icono", { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.4")
-            .to("#restriccion-texto", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.4")
-            .to("#restriccion-deco", { opacity: 1, duration: 0.6 }, "-=0.3");
+          tl.to("#restriccion-separador", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#restriccion-titulo", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#restriccion-icono", { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, 0)
+            .to("#restriccion-texto", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#restriccion-deco", { opacity: 1, duration: 0.6 }, 0);
         },
         onLeaveBack: () => {
           gsap.set("#restriccion-separador", { opacity: 0, y: -20 });

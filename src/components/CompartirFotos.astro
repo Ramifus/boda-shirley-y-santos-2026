@@ -1,0 +1,126 @@
+---
+// CompartirFotos.astro
+---
+
+<section class="py-8 px-4 relative overflow-hidden">
+
+  <div class="max-w-xl mx-auto text-center relative z-10">
+
+    <!-- SEPARADOR SUPERIOR -->
+    <div class="flex justify-center mb-6" id="compartir-separador">
+      <img
+        src="/imagenes/Separadores.webp"
+        alt="Separador decorativo"
+        class="w-32 md:w-40 h-auto object-contain opacity-90"
+      />
+    </div>
+
+    <!-- TÍTULO -->
+    <div class="mb-3" id="compartir-titulo">
+      <h2 class="font-charm text-2xl md:text-3xl text-[#C9A961] font-bold tracking-wide mb-3">
+        COMPARTE TUS FOTOS
+      </h2>
+      <div class="flex items-center justify-center gap-3">
+        <div class="w-16 h-[2px] bg-gradient-to-r from-transparent to-[#C9A961]"></div>
+        <div class="w-2 h-2 rounded-full bg-[#C9A961]"></div>
+        <div class="w-16 h-[2px] bg-gradient-to-l from-transparent to-[#C9A961]"></div>
+      </div>
+    </div>
+
+    <!-- ICONO -->
+    <div class="flex justify-center mb-4" id="compartir-icono">
+      <img
+        src="/imagenes/foto.png"
+        alt="Compartir fotos"
+        class="w-20 h-20 object-contain icono-dorado"
+      />
+    </div>
+
+    <!-- TEXTO -->
+    <div class="mb-8" id="compartir-texto">
+      <p class="font-charm text-xl md:text-2xl text-[#626a54] leading-relaxed">
+        Te invitamos a compartir<br />
+        tus fotografías de nuestra boda
+      </p>
+    </div>
+
+    <!-- BOTÓN COMPARTIR FOTOS -->
+    <div class="flex justify-center" id="compartir-boton">
+      <a
+        href="https://photos.app.goo.gl/iCdsoT3jBKRsedWk6"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="boton-compartir font-charm"
+      >
+        COMPARTIR FOTOS
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .icono-dorado {
+    filter: invert(69%) sepia(40%) saturate(502%) hue-rotate(3deg) brightness(92%) contrast(95%);
+  }
+
+  .boton-compartir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 32px;
+    background: transparent;
+    color: #C9A961;
+    border: 1.5px solid #C9A961;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.2);
+  }
+
+  .boton-compartir:hover {
+    background: #C9A961;
+    color: white;
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.4);
+    transform: translateY(-2px);
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  if (typeof window !== "undefined") {
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.set("#compartir-separador", { opacity: 0, y: -20 });
+      gsap.set("#compartir-titulo", { opacity: 0, y: 20 });
+      gsap.set("#compartir-icono", { opacity: 0, scale: 0.6 });
+      gsap.set("#compartir-texto", { opacity: 0, y: 20 });
+      gsap.set("#compartir-boton", { opacity: 0, y: 20 });
+
+      ScrollTrigger.create({
+        trigger: "#compartir-separador",
+        start: "top 85%",
+        onEnter: () => {
+          const tl = gsap.timeline();
+          tl.to("#compartir-separador", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#compartir-titulo", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#compartir-icono", { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, 0)
+            .to("#compartir-texto", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#compartir-boton", { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.5)" }, 0);
+        },
+        onLeaveBack: () => {
+          gsap.set("#compartir-separador", { opacity: 0, y: -20 });
+          gsap.set("#compartir-titulo", { opacity: 0, y: 20 });
+          gsap.set("#compartir-icono", { opacity: 0, scale: 0.6 });
+          gsap.set("#compartir-texto", { opacity: 0, y: 20 });
+          gsap.set("#compartir-boton", { opacity: 0, y: 20 });
+        },
+      });
+    });
+  }
+</script>

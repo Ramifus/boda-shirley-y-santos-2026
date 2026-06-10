@@ -1,0 +1,140 @@
+---
+// Pase.astro
+// Este componente muestra el número de pases asignados a cada invitado
+// Se puede configurar dinámicamente según el invitado
+
+interface Props {
+    numeroPases: number; // 1, 2, 3, etc.
+    nombreInvitado?: string; // Opcional: "Juan Pérez", "Familia García", etc.
+}
+
+const { numeroPases = 1, nombreInvitado = "" } = Astro.props;
+---
+
+<section class="py-8 px-4 relative overflow-hidden">
+
+  <div class="max-w-xl mx-auto text-center relative z-10">
+
+    <!-- SEPARADOR SUPERIOR -->
+    <div class="flex justify-center mb-6" id="pase-separador">
+      <img
+        src="/imagenes/Separadores.webp"
+        alt="Separador decorativo"
+        class="w-32 md:w-40 h-auto object-contain opacity-90"
+      />
+    </div>
+
+    <!-- TÍTULO -->
+    <div class="mb-3" id="pase-titulo">
+      <h2 class="font-charm text-2xl md:text-3xl text-[#C9A961] font-bold tracking-wide mb-3">
+        PASES ASIGNADOS
+      </h2>
+      <div class="flex items-center justify-center gap-3">
+        <div class="w-16 h-[2px] bg-gradient-to-r from-transparent to-[#C9A961]"></div>
+        <div class="w-2 h-2 rounded-full bg-[#C9A961]"></div>
+        <div class="w-16 h-[2px] bg-gradient-to-l from-transparent to-[#C9A961]"></div>
+      </div>
+    </div>
+
+    <!-- ICONO -->
+    <div class="flex justify-center mb-4" id="pase-icono">
+      <img
+        src="/imagenes/pase.png"
+        alt="Pases asignados"
+        class="w-20 h-20 object-contain icono-dorado"
+      />
+    </div>
+
+    <!-- NOMBRE DEL INVITADO -->
+    {
+        nombreInvitado && (
+            <p class="font-great-vibes text-2xl md:text-3xl text-[#C9A961] mb-4" id="pase-nombre">
+                {nombreInvitado}
+            </p>
+        )
+    }
+
+    <!-- NÚMERO DE PASES -->
+    <div class="mb-4" id="pase-numero">
+      <p class="font-charm text-5xl md:text-6xl text-[#C9A961] font-bold leading-none mb-2">
+        {numeroPases}
+      </p>
+      <p class="font-charm text-lg md:text-xl text-[#626a54] tracking-[0.25em] uppercase font-bold">
+        {numeroPases === 1 ? "Pase" : "Pases"}
+      </p>
+    </div>
+
+    <!-- TEXTO -->
+    <div class="mb-8" id="pase-texto">
+      <p class="font-charm text-xl md:text-2xl text-[#626a54] leading-relaxed">
+        {
+            numeroPases === 1
+                ? "Tu asistencia es invaluable para nosotros"
+                : `Esperamos contar con la presencia de ${numeroPases === 2 ? "ambos" : `los ${numeroPases}`}`
+        }
+      </p>
+    </div>
+
+    <!-- ICONOS DE PERSONAS -->
+    <div class="flex justify-center gap-3" id="pase-personas">
+      {
+          Array.from({ length: numeroPases }).map((_, index) => (
+              <div class="w-9 h-9 rounded-full bg-[#C9A961]/10 border border-[#C9A961]/30 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-[#C9A961]" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                  </svg>
+              </div>
+          ))
+      }
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .icono-dorado {
+    filter: invert(69%) sepia(40%) saturate(502%) hue-rotate(3deg) brightness(92%) contrast(95%);
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  if (typeof window !== "undefined") {
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.set("#pase-separador", { opacity: 0, y: -20 });
+      gsap.set("#pase-titulo", { opacity: 0, y: 20 });
+      gsap.set("#pase-icono", { opacity: 0, scale: 0.6 });
+      gsap.set("#pase-nombre", { opacity: 0, y: 20 });
+      gsap.set("#pase-numero", { opacity: 0, scale: 0.8 });
+      gsap.set("#pase-texto", { opacity: 0, y: 20 });
+      gsap.set("#pase-personas", { opacity: 0, y: 20 });
+
+      ScrollTrigger.create({
+        trigger: "#pase-separador",
+        start: "top 85%",
+        onEnter: () => {
+          const tl = gsap.timeline();
+          tl.to("#pase-separador", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#pase-titulo", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#pase-icono", { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, 0)
+            .to("#pase-nombre", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#pase-numero", { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.4)" }, 0)
+            .to("#pase-texto", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0)
+            .to("#pase-personas", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 0);
+        },
+        onLeaveBack: () => {
+          gsap.set("#pase-separador", { opacity: 0, y: -20 });
+          gsap.set("#pase-titulo", { opacity: 0, y: 20 });
+          gsap.set("#pase-icono", { opacity: 0, scale: 0.6 });
+          gsap.set("#pase-nombre", { opacity: 0, y: 20 });
+          gsap.set("#pase-numero", { opacity: 0, scale: 0.8 });
+          gsap.set("#pase-texto", { opacity: 0, y: 20 });
+          gsap.set("#pase-personas", { opacity: 0, y: 20 });
+        },
+      });
+    });
+  }
+</script>

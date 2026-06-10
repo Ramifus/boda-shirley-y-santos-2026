@@ -17,6 +17,8 @@ import GaleriaFotos from "../components/GaleriaFotos.astro";
 import Despedida from "../components/Despedida.astro";
 import FloresAbajo from "../components/FloresAbajo.astro";
 import Restriccion from "../components/Restriccion.astro";
+import CompartirFotos from "../components/CompartirFotos.astro";
+import Pase from "../components/Pase.astro";
 ---
 
 <Layout title="Boda">
@@ -29,10 +31,11 @@ import Restriccion from "../components/Restriccion.astro";
     <Calendario />
     <DireccionIglesia />
     <Direccion />
-
     <Itinerario />
+    <Pase numeroPases={2} />
     <CodigoVestimenta />
     <Restriccion />
+    <CompartirFotos />
     <GaleriaFotos />
     <Despedida />
     <FloresAbajo />
